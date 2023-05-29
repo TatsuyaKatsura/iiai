@@ -19,11 +19,11 @@
 
 %author情報追記
 \author{\IEEEauthorblockN{Tatsuya Katsura}
-\IEEEauthorblockA{\textit{Okayama University, Japan}\\
+\IEEEauthorblockA{\textit{Graduate School of Environmental, Life, Natural Science and Technology \\ Okayama University, Japan}\\
 pcn05fd3@s.okayama-u.ac.jp}
 \and
 \IEEEauthorblockN{Koichi Takeuchi}
-\IEEEauthorblockA{\textit{Okayama University, Japan}\\
+\IEEEauthorblockA{\textit{Faculty of Environmental, Life, Natural Science and Technology \\ Okayama University, Japan}\\
 \textit{takeuc-k@okayama-u.ac.jp}}
 }
 
@@ -34,7 +34,7 @@ pcn05fd3@s.okayama-u.ac.jp}
 \begin{abstract}
 In this paper we propose a platform of pattern matching system that can extract required phrases or sentences in texts.
 Finding certain expressions in texts are often needed in language learning, e.g., examples of case markers
-between a predicate and an argument, or possible nouns in subject of a verb in a certain meaning. In previous studies,
+between a predicate and its argument, or possible nouns in subject of a verb in a certain meaning. In previous studies,
 several types of systems, containing concordancers, are proposed. However, it is not easy to apply combined
 patterns because the pattern matching templates are previously fixed.
 % flexibilityが必要 背景としては task specific な systemで作られているので 英語検索に特化はしてると
@@ -62,7 +62,7 @@ In this paper we discuss the system architecture and the extendability of the pa
 
 \section{Introduction}
 Extraction of some phrases and expressions in texts is considered essential function in language education.
-For example, case markers located between a predicate and an object in Japanese language are various
+For example, case markers located between a predicate and its object in Japanese language are various
 rules and alternations\footnote{The verbs {\it morau} (get) and {\it eru} (obtain) are almost the same meaning
 but {\it morau} has alternation between the case markers {\it ni/kara} as {\it kare ni/kara morau}
 ((I) get (it) from him.), and 
@@ -112,7 +112,7 @@ In this paper we discuss the system architecture and the flexibility of the patt
 \section{Related Work}
 
 % sketch engine
-One of the famous concordancers is Sketch Engine. Sketch Engine provide an environment
+One of the famous concordancers is Sketch Engine. Sketch Engine provides an environment
 that user can search for inflections, lemmas, words, part-of-speeches (POSes), and more
 with the CQL that works at the level of regular grammar.
 Sketch Engine offers a Japanese search environment as well\footnote{https://www.sketchengine.eu/corpora-and-languages/japanese-text-corpora/}; however, the search templates
@@ -134,7 +134,7 @@ The Explorer is implemented based on Tregex \cite{roger2006} that can extract de
 parsed tree structure\footnote{https://nlp.stanford.edu/nlp/javadoc/javanlp/edu/stanford/nlp/trees/tregex/
 TregexPattern.html}. The possible search patterns are effective and the several combinations of pattern
 are available; however, the users are required to build a search formula to capture the desired expressions\footnote{For example, the pattern ``\_\_ !$<$ \_\_'' indicates extraction of words from the tree corpus.
-As this pattern shows, users are requires to have enough knowledge of pattern definitions to build
+As this pattern shows, users are required to have enough knowledge of pattern definitions to build
 a combined pattern. Thus, 
 frequently used patterns are already defined and available to users in NPCMJ Explorer.}
 
@@ -143,7 +143,7 @@ In NLP study, StruAP\cite{yanai2017} which is a pattern matching tool for parsed
 StruAP can designate complex combination of nodes in syntax trees and has a Web-based interface. 
 The patterns, however, should be defined by the pattern language,
 and the tool is a commercial product and not publicly available. 
-Thus, we cannot use the tools. 
+Thus, we cannot use the tool. 
 
 
 \section{Platfrom of Pattern Matching System}
@@ -205,20 +205,22 @@ The results of pattern matching are sent from the back-end to the front-end.
 The matched expressions are displayed in red in the text.
 This function can be realized because the position information is recorded 
 using Prolog predicates. The details of format of the predicates
-in this task are described in Section \label{sec:prolog}. 
+in this task are described in Section \ref{sec:prolog}. 
 
 
 \subsection{Prolog-based Data Structure} 
 \label{sec:prolog}
-The assumed demands of searching texts are extracting chunk, phrases and words with 
+The assumed demands of searching texts are extracting chunks, phrases and words with 
 combination of constrains specifying dependencies of subjects and predicates, as well as particles and POSes.
 To meet these demands, texts are segmented to morphemes with lemmas and POSes using the morphological analyzer, and
 the morphemes are grouped into chunks added with dependency relations using the dependency parser.
-After the chunks are analyzed their predicate-argument relations, and semantic roles \footnote{We
+After the chunks are analyzed their predicate-argument relations, semantic roles \footnote{We
 currently implemented extended thematic roles\cite{fillmore68,take2011f} such as 動作主 (Agent), 対象 (Theme), 時間 (Goal) and so on. The details are in Predicate Thesaurus https://pth.cl.cs.okayama-u.ac.jp/. } are assigned to the arguments of the predicates. 
 
-To reflect the rich information to make if available for search, we define the predicates
-based on the relations between nodes. Figure \label{fig:tree} depicts a tree structure of
+%To reflect the rich information to make it available for search,
+In order to capture and utilize the extensive information for search purposes, 
+we define the predicates
+based on the relations between nodes. Figure \ref{fig:tree} depicts a tree structure of
 a sentence with analyzed results using NLP tools. 
 
 \begin{figure}[htbp]
@@ -228,7 +230,7 @@ a sentence with analyzed results using NLP tools.
 \end{figure}
 
 Thus, we define the following Prolog predicates to capture the tree structure of
-the analyzed results Table \ref{tbl:predicates}. 
+the analyzed results as Table \ref{tbl:predicates}. 
 
 \begin{table}[htbp]
 \caption{Prolog Predicates}
@@ -273,13 +275,11 @@ is ``0\_2''. This provides the position of the string that are matched to the pa
 In the previous section, we defined the predicates in database for recording tree structure.
 Using the predicates defined in the previous section, 
 users can build a search query. All of the predicates are connected to the blocks
-in Blockly. Figure \ref{fig:pattern} shows that an example of prolog-based query to extract
-to extract predicates and arguments that has dependency relation with the case marker ``を''
-(direct object case).
+in Blockly. Figure \ref{fig:pattern} shows that an example of prolog-based query to extract predicates and their arguments that have dependency relation with the case marker ``を'' (accusative case).
 
 \begin{figure}[htbp]
 \centerline{\includegraphics[scale=.4]{fig/wo.eps}}
-\caption{Example of a search query: to extract predicates and arguments that has dependency relation with the case marker ``を'' (direct object case).}
+\caption{Example of a search query: to extract predicates and arguments that has dependency relation with the case marker ``を'' (accusative case).}
 \label{fig:pattern}
 \end{figure}
 
@@ -299,7 +299,7 @@ Thus, this predicate matches only those whose POSes are verbs; then the variable
 {\it SENTENCE\_ID} and {\it Verb\_morph\_id} will record the IDs by unification. 
 
 
-In the displaying the results. the system has three display modes, i.e.,
+In the displaying the results, the system has three display modes, i.e.,
 table, highlight and keyword in context (KWIC).
 Figure \ref{fig:table} shows the results of matched chunks with table format. 
 
@@ -368,13 +368,10 @@ In the current implementation, the patching system does not accept ambiguous mat
 but the SWI-Prolog provides a function to deal with ambiguous matching of regular expressions. 
 This must be an issue for the future.
 
-%\section*{Acknowledgments}
-%This work was partially supported by JSPS KAKENHI Grant Number 22K00530.
+\section*{Acknowledgments}
+A part of this research is supported by JSPS KAKENHI (Grant Number 22K00530).
 
-
-
-
-
+%This work was partially supported by 
 \bibliographystyle{unsrt}
 
 \bibliography{all,my-results}
