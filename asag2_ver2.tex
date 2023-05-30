@@ -18,6 +18,7 @@
 }
 
 %author情報追記
+\author{\IEEEauthorblockN{Tatsuya Katsura}
 \IEEEauthorblockA{\textit{Graduate School of Environmental, Life,} \\
 \textit{Natural Science and Technology} \\
 \textit{Okayama University}\\
@@ -35,7 +36,6 @@ takeuc-k@okayama-u.ac.jp}
 \maketitle
 
 \begin{abstract}
-<<<<<<< HEAD
 In this paper we propose a platform of pattern matching system that can extract required phrases or sentences in texts.
 Finding certain expressions in texts are often needed in language learning, e.g., examples of case markers
 between a predicate and its argument, or possible nouns in subject of a verb in a certain meaning. In previous studies,
@@ -58,30 +58,6 @@ on an Web server with JavaScript-based interface and database system.
 In the performance test, we show that the proposed system can deal with relatively large scale texts
 (10,000 sentences), and also demonstrate the combined patterns can be applied to the texts.
 In this paper we discuss the system architecture and the extendability of the pattern matching. 
-=======
-  In this paper we propose a platform of pattern matching system that can extract required phrases or sentences in texts.
-  Finding certain expressions in texts are often needed in language learning, e.g., examples of case markers
-  between a predicate and its argument, or possible nouns in subject of a verb in a certain meaning. In previous studies,
-  several types of systems, containing concordancers, are proposed. However, it is not easy to apply combined
-  patterns because the pattern matching templates are previously fixed.
-  % flexibilityが必要 背景としては task specific な systemで作られているので 英語検索に特化はしてると
-  % 小論文での表現でみんなが同じようにどう使っているかといった表現の分析に利用するのは容易ではない
-  % その一番の原因は flexibility 
-  Thus, we propose a flexible phrase searching system in which users can create search patterns
-  by combining blocks of basic search templates. % 拡張性がある blockで　提案する
-  %長すぎる時はここを消す
-  One of the characteristics the proposed system is that user can also specify where to be highlighted
-  in texts with the blocks.
-  To realize the function of combining patterns by users, the proposed system employs
-  Prolog as the base of the data structure. The platform of the searching system is implemented
-  on an Web server with JavaScript-based interface and database system.
-  % ブロックにいろいろ設定することで，ユーザは組み合わせてさらに使うことができる
-  %To realize the pattern matching of predicate-argument structure, 
-  %the system emplopys several NLP tools.
-  In the performance test, we show that the proposed system can deal with relatively large scale texts
-  (10,000 sentences), and also demonstrate the combined patterns can be applied to the texts.
-  In this paper we discuss the system architecture and the extendability of the pattern matching.
->>>>>>> 0449a3734a3afd14471fe85dd04f497881b7e319
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -162,27 +138,16 @@ The Explorer is implemented based on Tregex \cite{roger2006} that can extract de
 parsed tree structure\footnote{https://nlp.stanford.edu/nlp/javadoc/javanlp/edu/stanford/nlp/trees/tregex/
   TregexPattern.html}. The possible search patterns are effective and the several combinations of pattern
 are available; however, the users are required to build a search formula to capture the desired expressions\footnote{For example, the pattern ``\_\_ !$<$ \_\_'' indicates extraction of words from the tree corpus.
-<<<<<<< HEAD
 As this pattern shows, users are required to have enough knowledge of pattern definitions to build
 a combined pattern. Thus, 
 frequently used patterns are already defined and available to users in NPCMJ Explorer.}
-=======
-  As this pattern shows, users are required to have enough knowledge of pattern definitions to build
-  a combined pattern. Thus,
-  frequently used patterns are already defined and available to users in NPCMJ Explorer.}
->>>>>>> 0449a3734a3afd14471fe85dd04f497881b7e319
 
 % text mining
 In NLP study, StruAP\cite{yanai2017} which is a pattern matching tool for parsed trees is proposed.
 StruAP can designate complex combination of nodes in syntax trees and has a Web-based interface.
 The patterns, however, should be defined by the pattern language,
-<<<<<<< HEAD
 and the tool is a commercial product and not publicly available. 
 Thus, we cannot use the tool. 
-=======
-and the tool is a commercial product and not publicly available.
-Thus, we cannot use the tool.
->>>>>>> 0449a3734a3afd14471fe85dd04f497881b7e319
 
 
 \section{Platfrom of Pattern Matching System}
@@ -244,25 +209,16 @@ The results of pattern matching are sent from the back-end to the front-end.
 The matched expressions are displayed in red in the text.
 This function can be realized because the position information is recorded
 using Prolog predicates. The details of format of the predicates
-<<<<<<< HEAD
 in this task are described in Section \ref{sec:prolog}. 
-=======
-in this task are described in Section \ref{sec:prolog}.
->>>>>>> 0449a3734a3afd14471fe85dd04f497881b7e319
 
 
 \subsection{Prolog-based Data Structure}
 \label{sec:prolog}
-<<<<<<< HEAD
 The assumed demands of searching texts are extracting chunks, phrases and words with 
-=======
-The assumed demands of searching texts are extracting chunks, phrases and words with
->>>>>>> 0449a3734a3afd14471fe85dd04f497881b7e319
 combination of constrains specifying dependencies of subjects and predicates, as well as particles and POSes.
 To meet these demands, texts are segmented to morphemes with lemmas and POSes using the morphological analyzer, and
 the morphemes are grouped into chunks added with dependency relations using the dependency parser.
 After the chunks are analyzed their predicate-argument relations, semantic roles \footnote{We
-<<<<<<< HEAD
 currently implemented extended thematic roles\cite{fillmore68,take2011f} such as 動作主 (Agent), 対象 (Theme), 時間 (Goal) and so on. The details are in Predicate Thesaurus https://pth.cl.cs.okayama-u.ac.jp/. } are assigned to the arguments of the predicates. 
 
 %To reflect the rich information to make it available for search,
@@ -270,15 +226,6 @@ In order to capture and utilize the extensive information for search purposes,
 we define the predicates
 based on the relations between nodes. Figure \ref{fig:tree} depicts a tree structure of
 a sentence with analyzed results using NLP tools. 
-=======
-  currently implemented extended thematic roles\cite{fillmore68,take2011f} such as 動作主 (Agent), 対象 (Theme), 時間 (Goal) and so on. The details are in Predicate Thesaurus https://pth.cl.cs.okayama-u.ac.jp/. } are assigned to the arguments of the predicates.
-
-%To reflect the rich information to make it available for search,
-In order to capture and utilize the extensive information for search purposes,
-we define the predicates
-based on the relations between nodes. Figure \ref{fig:tree} depicts a tree structure of
-a sentence with analyzed results using NLP tools.
->>>>>>> 0449a3734a3afd14471fe85dd04f497881b7e319
 
 \begin{figure}[htbp]
   \centerline{\includegraphics[scale=.4]{fig/tree.eps}}
@@ -287,11 +234,7 @@ a sentence with analyzed results using NLP tools.
 \end{figure}
 
 Thus, we define the following Prolog predicates to capture the tree structure of
-<<<<<<< HEAD
 the analyzed results as Table \ref{tbl:predicates}. 
-=======
-the analyzed results as Table \ref{tbl:predicates}.
->>>>>>> 0449a3734a3afd14471fe85dd04f497881b7e319
 
 \begin{table}[htbp]
   \caption{Prolog Predicates}
@@ -339,15 +282,9 @@ users can build a search query. All of the predicates are connected to the block
 in Blockly. Figure \ref{fig:pattern} shows that an example of prolog-based query to extract predicates and their arguments that have dependency relation with the case marker ``を'' (accusative case).
 
 \begin{figure}[htbp]
-<<<<<<< HEAD
 \centerline{\includegraphics[scale=.4]{fig/wo.eps}}
 \caption{Example of a search query: to extract predicates and arguments that has dependency relation with the case marker ``を'' (accusative case).}
 \label{fig:pattern}
-=======
-  \centerline{\includegraphics[scale=.4]{fig/wo.eps}}
-  \caption{Example of a search query: to extract predicates and arguments that has dependency relation with the case marker ``を'' (accusative case).}
-  \label{fig:pattern}
->>>>>>> 0449a3734a3afd14471fe85dd04f497881b7e319
 \end{figure}
 
 In Figure \ref{fig:pattern}, the dark blue blocks denote the prolog predicates that are defined
